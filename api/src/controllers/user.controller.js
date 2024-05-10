@@ -34,7 +34,7 @@ async function loginUser(req, res) {
       throw new Error("Credentials missing");
     }
     const token = generateAccessAndRefreshToken(user);
-    res.json(token);
+    res.json({ token, user });
   } catch (error) {
     res.status(404).json({
       message: error.message,

@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, minLength: 8, select: false },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    isAdmin: { type: Boolean, default: false },
   },
   {
     timestamps: true,

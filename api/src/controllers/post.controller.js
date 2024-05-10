@@ -3,7 +3,7 @@ const { postErrorHandler } = require("../utils/apiHelper");
 
 async function getAllPosts(req, res) {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().populate("createdBy");
     res.json(posts);
   } catch (error) {
     postErrorHandler(error, res);
@@ -13,7 +13,9 @@ async function getAllPosts(req, res) {
 async function createPost(req, res) {
   try {
     const _post = req.body;
-    const post = await Post.create(_post);
+    const createdBy = req.userId;
+    const post = await Post.create({ ..._post, createdBy });
+    await post.populate("createdBy");
     if (!post) {
       throw new Error("Cast to ObjectId");
     }
